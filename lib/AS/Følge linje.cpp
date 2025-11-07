@@ -22,7 +22,7 @@ void calibrateLineSensors() {
     motors.setSpeeds(0,0);
 }
 
-void followLine() { 
+void followLine() { ¨//ikke ferdig
     //Leser av posisjon
     int LS.Position = lineSensors.readLine(lineSensorValues);
     //Vet at verdien 2000 gir midten av streken
