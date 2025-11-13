@@ -1,19 +1,16 @@
 #include <Arduino.h>
-#include <Zumo32U4Motors.h>
-#include <FollowLine.h>
-
-
-
+#include "linesensors.h"
 
 void setup() {
-lineSensors.initFiveSensors();
-buttonA.waitForButton();
-calibrateLineSensors();
-
+    lineSensors.initFiveSensors();
+    buttonA.waitForButton();
+    calibrateLineSensors();
 }
 
 void loop() {
-buttonA.waitForButton();
-followLine(); // ikke ferdig
-
+    buttonA.waitForButton();
+    while (!buttonA.isPressed()) {
+        followLine();
+    }
+    motors.setSpeeds(0, 0);
 }
