@@ -8,9 +8,26 @@ void setup() {
 }
 
 void loop() {
-    buttonA.waitForButton();
-    while (!buttonA.isPressed()) {
+    
+    if (buttonA.isPressed()) {
+        while (!buttonA.isPressed()) {
         followLine();
     }
+    
     motors.setSpeeds(0, 0);
+}
+
+    if (buttonB.isPressed()) {
+        while (!buttonB.isPressed()) {
+            followLine2();
+        }
+    motors.setSpeeds(0,0);
+    }
+
+    if (buttonC.isPressed()) {
+        while (!buttonC.isPressed()) {
+            followLine3();
+        }
+    motors.setSpeeds(0,0);
+    }
 }
