@@ -17,8 +17,8 @@ Zumo32U4LineSensors lineSensors;
 
 void calibrateLineSensors() {
     delay(1000);
-    for (int16_t i = 0; i < 80; i++) {
-        if (i > 20 && i <= 60) {
+    for (int16_t i = 0; i < 120; i++) {
+        if (i > 30 && i <= 90) {
             motors.setSpeeds(300, -300);
         } else {
             motors.setSpeeds(-300, 300
