@@ -3,29 +3,31 @@
 
 void setup() {
     lineSensors.initFiveSensors();
+    proxSensors.initThreeSensors();
+    
     buttonA.waitForButton();
     calibrateLineSensors();
 }
 
 void loop() {
     
-    if (buttonA.isPressed()) {
-        while (!buttonA.isPressed()) {
+    if (buttonA.getSingleDebouncedPress()) {
+        while (!buttonA.getSingleDebouncedPress()) {
         followLine();
     }
     
     motors.setSpeeds(0, 0);
 }
 
-    if (buttonB.isPressed()) {
-        while (!buttonB.isPressed()) {
+    if (buttonB.getSingleDebouncedPress()) {
+        while (!buttonB.getSingleDebouncedPress()) {
             followLine2();
         }
     motors.setSpeeds(0,0);
     }
 
-    if (buttonC.isPressed()) {
-        while (!buttonC.isPressed()) {
+    if (buttonC.getSingleDebouncedPress()) {
+        while (!buttonC.getSingleDebouncedPress()) {
             followLine3();
         }
     motors.setSpeeds(0,0);
