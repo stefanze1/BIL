@@ -15,5 +15,5 @@ void followLine();
 void followLine2();
 void followLine3();
 void returnToCharger();
-
+void proxSensor();
 #endif

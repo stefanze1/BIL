@@ -14,6 +14,7 @@ void loop() {
     if (buttonA.getSingleDebouncedPress()) {
         while (!buttonA.getSingleDebouncedPress()) {
         followLine();
+        proxSensor();
     }
     
     motors.setSpeeds(0, 0);

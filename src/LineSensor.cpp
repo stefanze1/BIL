@@ -105,8 +105,8 @@ void proxSensor() {
     int8_t leftProx = proxSensors.countsFrontWithLeftLeds();
     int8_t rightProx = proxSensors.countsFrontWithRightLeds();
 
-    if (leftProx > 5 && rightProx > 5) { // 0 til 7
+    if (leftProx > 3 || rightProx > 3) { // 0 til 7 
         motors.setSpeeds(0,0);
-        delay(20000);
-    }
+        delay(10000);
+    }     
 }
