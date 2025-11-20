@@ -1,20 +1,15 @@
 #include <Arduino.h>
-#include <Zumo32U4Motors.h>
-#include <test.h>
-//hei
-// put function declarations here:
-int myFunction(int, int);
+#include "display.h"   // vår egen header
 
 void setup() {
-  // put your setup code here, to run once:
-  int result = myFunction(2, 3);
+  // Start skjermen og vis intro
+  screenStartup();
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
-}
+  // Oppdater batteri og display hele tiden
+  batteriDrain();
 
-// put function definitions here:
-int myFunction(int x, int y) {
-  return x + y;
+  // Her kan du senere legge inn knapper, motorer osv.
+  delay(50); // liten pause for å ikke spamme CPU
 }
