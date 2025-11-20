@@ -35,7 +35,7 @@ void followLine() {
     LSLastError = 0;
     int16_t LSPosition = lineSensors.readLine(lineSensorValues); //Leser posisjon
     int16_t LSError = LSPosition - 2000; // trekker fra 200, da det er midtpunkt
-    int16_t speedDiff = LSError / 6 + 6 * (LSError - LSLastError); //Dette er PID regulering, uten I. funnet på nett.
+    int16_t speedDiff = LSError / 10 + 1 * (LSError - LSLastError); //Dette er PID regulering, uten I. funnet på nett.
     LSLastError = LSError;
 
     int16_t LSLeftSpeed = (int16_t)maxSpeed + speedDiff;
@@ -46,24 +46,13 @@ void followLine() {
 
     motors.setSpeeds(LSLeftSpeed, LSRightSpeed);
 
-    //test
-    proxSensors.read();
-
-    int8_t leftProx = proxSensors.countsFrontWithLeftLeds();
-    int8_t rightProx = proxSensors.countsFrontWithRightLeds();
-
-    // if (leftProx > 3 || rightProx > 3) { // 0 til 7
-    //     motors.setSpeeds(0,0);
-    //     delay(20000);
-    // }
-
    }
 
 void followLine2() {
     LSLastError = 0;
     int16_t LSPosition = lineSensors.readLine(lineSensorValues);
     int16_t LSError = LSPosition - 2000;
-    int16_t speedDiff = LSError / 4 + 6 * (LSError - LSLastError);
+    int16_t speedDiff = LSError / 10 + 1 * (LSError - LSLastError);
     LSLastError = LSError;
 
     int16_t LSLeftSpeed = (int16_t)maxSpeed2 + speedDiff;
@@ -78,7 +67,7 @@ void followLine3() {
     LSLastError = 0;
     int16_t LSPosition = lineSensors.readLine(lineSensorValues);
     int16_t LSError = LSPosition - 2000;
-    int16_t speedDiff = LSError / 4 + 6 * (LSError - LSLastError);
+    int16_t speedDiff = LSError / 10 + 1 * (LSError - LSLastError);
     LSLastError = LSError;
 
     int16_t LSLeftSpeed = (int16_t)maxSpeed3 + speedDiff;
@@ -110,14 +99,14 @@ void returnToCharger () {
     }
 }    
 
-// void proxSensor() {
-//     proxSensors.read();
+void proxSensor() {
+    proxSensors.read();
 
-//     int8_t leftProx = proxSensors.countsFrontWithLeftLeds();
-//     int8_t rightProx = proxSensors.countsFrontWithRightLeds();
+    int8_t leftProx = proxSensors.countsFrontWithLeftLeds();
+    int8_t rightProx = proxSensors.countsFrontWithRightLeds();
 
-//     if (leftProx > 5 && rightProx > 5) { // 0 til 7
-//         motors.setSpeeds(0,0);
-//         delay(20000);
-//     }
-// }
+    if (leftProx > 5 && rightProx > 5) { // 0 til 7
+        motors.setSpeeds(0,0);
+        delay(20000);
+    }
+}
