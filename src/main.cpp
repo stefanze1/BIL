@@ -11,5 +11,4 @@ void loop() {
   batteriDrain();
 
   // Her kan du senere legge inn knapper, motorer osv.
-  delay(50); // liten pause for å ikke spamme CPU
-}
+  }
