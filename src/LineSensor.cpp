@@ -52,7 +52,7 @@ void followLine() {
    }
 
 void followLine2() {
-    LSLastError = 0;
+    // LSLastError = 0;
     int16_t LSPosition = lineSensors.readLine(lineSensorValues);
     int16_t LSError = LSPosition - 2000;
     int16_t speedDiff = LSError / 12 + 1 * (LSError - LSLastError);
@@ -67,7 +67,7 @@ void followLine2() {
     motors.setSpeeds(LSLeftSpeed, LSRightSpeed);
 }
 void followLine3() {
-    LSLastError = 0;
+    // LSLastError = 0;
     int16_t LSPosition = lineSensors.readLine(lineSensorValues);
     int16_t LSError = LSPosition - 2000;
     int16_t speedDiff = LSError / 12 + 1 * (LSError - LSLastError);

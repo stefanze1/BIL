@@ -4,8 +4,8 @@
 
 #include "linesensors.h"
 
-// Batteriet starter på 90%
-int batteri = 90;
+// Batteriet starter på 100%
+int batteri = 100;
 
 // OLED-display: SH1106 128x64, SPI
 U8G2_SH1106_128X64_NONAME_F_4W_SW_SPI display(
@@ -19,7 +19,7 @@ U8G2_SH1106_128X64_NONAME_F_4W_SW_SPI display(
 
 
 unsigned long lastDrainTime = 0;
-const unsigned long DRAIN_INTERVAL = 3000;   // hvert 3. sekund
+const unsigned long DRAIN_INTERVAL = 400;   // hvert 3. sekund
 
 bool blinkOn = true;
 unsigned long lastBlinkTime = 0;
@@ -35,7 +35,7 @@ void screenStartup() {
   display.clearBuffer();
   display.setFont(u8g2_font_8x13_tf);
   display.drawFrame(88, 2, 38, 21);
-  display.drawStr(95, 16, "90%");
+  display.drawStr(90, 16, "100%");
   display.sendBuffer();
   display.clearBuffer();
   delay(2000);
@@ -43,10 +43,9 @@ void screenStartup() {
 
 void batteriDrain() {
   unsigned long now = millis();
-  followLine();
   // Simulert batteriforbruk
   if (now - lastDrainTime >= DRAIN_INTERVAL && batteri > 0) {
-    int drain = 5;   // enkel: trekk 5% hver 3. sekund f.eks.
+    int drain = 1;   // enkel: trekk 5% hver 3. sekund f.eks.
 
     batteri -= drain;
     if (batteri < 0) batteri = 0;
@@ -78,9 +77,6 @@ void batteriDrain() {
   // Varsel ved lavt batteri
   if (batteri <= 20 && blinkOn) {
     display.drawStr(0, 30, "Finn Ladestasjon");
-    followLine2();
-    // returnToCharger();
-
   }
 
   display.sendBuffer();

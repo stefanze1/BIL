@@ -16,9 +16,16 @@ void loop() {
     
 
     if (buttonA.getSingleDebouncedPress()) {
-        while (!buttonA.getSingleDebouncedPress()) {
-              batteriDrain();
-              delay(500);
+        while (!buttonA.getSingleDebouncedPress()) { 
+            batteriDrain();
+            if (batteri <= 20) {
+                followLine2();
+                returnToCharger();
+            }
+            else {
+                followLine();
+                
+            }
     }
     
     motors.setSpeeds(0, 0);
