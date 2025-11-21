@@ -14,7 +14,7 @@ void loop() {
     if (buttonA.getSingleDebouncedPress()) {
         while (!buttonA.getSingleDebouncedPress()) {
         followLine();
-        // returnToCharger();
+        returnToCharger();
     }
     
     motors.setSpeeds(0, 0);
