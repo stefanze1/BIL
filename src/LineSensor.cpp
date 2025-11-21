@@ -77,32 +77,45 @@ void followLine3() {
 
 
 void returnToCharger () {
-    int16_t LSPosition = lineSensors.readLine(lineSensorValues);
-     if (lineSensorValues[4] > 600 ) { //&& LSPosition > 3600
+    // int16_t LSPosition = lineSensors.readLine(lineSensorValues);
+  
+    if (lineSensorValues[4] > 925 ) { //&& LSPosition > 3400
         motors.setSpeeds(0,0);
         delay(50);
         motors.setSpeeds(200,0);
         delay(500);
         motors.setSpeeds(0,0);
-        if (lineSensorValues[0] < 150 && lineSensorValues[1] < 150 && lineSensorValues[2] < 150 && 
-            lineSensorValues[3] < 150 && lineSensorValues[4] < 150) {
-            motors.setSpeeds(0,0);
-            delay(5000);
-        }
     }
-    else if (lineSensorValues[0] < 400 ) { //&& LSPosition < 600
+    if (lineSensorValues[0] > 950  ) { //&& LSPosition < 400
         motors.setSpeeds(0,0);
         delay(50);
         motors.setSpeeds(0,200);
         delay(500);
         motors.setSpeeds(0,0);
-        if (lineSensorValues[0] < 150 && lineSensorValues[1] < 150 && lineSensorValues[2] < 150 && 
-            lineSensorValues[3] < 150 && lineSensorValues[4] < 150) {
-            motors.setSpeeds(0,0);
-            delay(5000);
-        }
     }
-}    
+}
+  
+
+//Stoppe ved dead end
+    // int16_t LSPosition = lineSensors.readLine(lineSensorValues);
+    
+    // bool deadEnd = true;
+    // for (int i = 0; i < 5; i++) {
+    //     if (lineSensorValues[i] > 25) {
+    //         deadEnd = false;
+    //         break;
+    //     }
+    // }
+
+    // if (deadEnd) {
+    //     motors.setSpeeds(0,0);
+    //     delay(1000);
+    //     return;
+    //     }
+
+
+
+
 
 // void proxSensor() {
 //     proxSensors.read();
