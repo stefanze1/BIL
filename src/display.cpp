@@ -78,4 +78,4 @@ void batteriDrain() {
   }
 
   display.sendBuffer();
-}
+
