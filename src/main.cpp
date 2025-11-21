@@ -19,7 +19,6 @@ void loop() {
         while (!buttonA.getSingleDebouncedPress()) {
               batteriDrain();
               delay(500);
-              followLine();
     }
     
     motors.setSpeeds(0, 0);

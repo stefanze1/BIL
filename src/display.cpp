@@ -43,7 +43,7 @@ void screenStartup() {
 
 void batteriDrain() {
   unsigned long now = millis();
-
+  followLine();
   // Simulert batteriforbruk
   if (now - lastDrainTime >= DRAIN_INTERVAL && batteri > 0) {
     int drain = 5;   // enkel: trekk 5% hver 3. sekund f.eks.
@@ -79,7 +79,7 @@ void batteriDrain() {
   if (batteri <= 20 && blinkOn) {
     display.drawStr(0, 30, "Finn Ladestasjon");
     followLine2();
-    returnToCharger();
+    // returnToCharger();
 
   }
 
