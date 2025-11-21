@@ -9,10 +9,6 @@
 int16_t LSLastError = 0;
 unsigned int lineSensorValues[NUM_SENSORS];
 
-//Returner til lader
-bool turn = false;
-bool allWhite = true;
-
 Zumo32U4ButtonA buttonA;
 Zumo32U4ButtonB buttonB;
 Zumo32U4ButtonC buttonC;
@@ -35,7 +31,6 @@ void calibrateLineSensors() {
 }
 
 void followLine() {
-    // LSLastError = 0;
     int16_t LSPosition = lineSensors.readLine(lineSensorValues); //Leser posisjon
     int16_t LSError = LSPosition - 2000; // trekker fra 200, da det er midtpunkt
     int16_t speedDiff = LSError / 12 + 1 * (LSError - LSLastError); //Dette er PID regulering, uten I. funnet på nett.
@@ -52,10 +47,9 @@ void followLine() {
    }
 
 void followLine2() {
-    // LSLastError = 0;
     int16_t LSPosition = lineSensors.readLine(lineSensorValues);
     int16_t LSError = LSPosition - 2000;
-    int16_t speedDiff = LSError / 12 + 1 * (LSError - LSLastError);
+    int16_t speedDiff = LSError / 8 + 1 * (LSError - LSLastError);
     LSLastError = LSError;
 
     int16_t LSLeftSpeed = (int16_t)maxSpeed2/2 + speedDiff;
@@ -67,10 +61,9 @@ void followLine2() {
     motors.setSpeeds(LSLeftSpeed, LSRightSpeed);
 }
 void followLine3() {
-    // LSLastError = 0;
     int16_t LSPosition = lineSensors.readLine(lineSensorValues);
     int16_t LSError = LSPosition - 2000;
-    int16_t speedDiff = LSError / 12 + 1 * (LSError - LSLastError);
+    int16_t speedDiff = LSError / 8 + 1 * (LSError - LSLastError);
     LSLastError = LSError;
 
     int16_t LSLeftSpeed = (int16_t)maxSpeed3/2 + speedDiff;
@@ -82,77 +75,34 @@ void followLine3() {
     motors.setSpeeds(LSLeftSpeed, LSRightSpeed);
 }
 
-void returnToCharger() {
+
+void returnToCharger () {
     int16_t LSPosition = lineSensors.readLine(lineSensorValues);
-    
-    for (int i = 0; i < 5; i++) {
-        if (lineSensorValues[i] >= 150) {
-            allWhite = false;
-            break;
-        }
-    }
-
-    if (allWhite) {
+     if (lineSensorValues[4] > 600 ) { //&& LSPosition > 3600
         motors.setSpeeds(0,0);
-        delay(5000);
-    }
-
-    if (!turn) {//høyre kryss
-        if (lineSensorValues[4] > 700 && LSPosition > 3300) {
-            turn = true;
+        delay(50);
+        motors.setSpeeds(200,0);
+        delay(500);
+        motors.setSpeeds(0,0);
+        if (lineSensorValues[0] < 150 && lineSensorValues[1] < 150 && lineSensorValues[2] < 150 && 
+            lineSensorValues[3] < 150 && lineSensorValues[4] < 150) {
             motors.setSpeeds(0,0);
-            delay(50);
-            motors.setSpeeds(200,0);
-            delay(500);
-            motors.setSpeeds(0,0);
-            return;
-        }
-    
-        
-        else if (lineSensorValues[0] > 700 && LSPosition < 700) {//venstre kryss
-            turn = true;
-            motors.setSpeeds(0,0);
-            delay(50);
-            motors.setSpeeds(0,200);
-            delay(500);
-            motors.setSpeeds(0,0);
-            return;
-         }
-        }
-        else {
-            turn = false;
+            delay(5000);
         }
     }
-
-
-
-// void returnToCharger () {
-//     int16_t LSPosition = lineSensors.readLine(lineSensorValues);
-//      if (lineSensorValues[4] > 600 ) { //&& LSPosition > 3600
-//         motors.setSpeeds(0,0);
-//         delay(50);
-//         motors.setSpeeds(200,0);
-//         delay(500);
-//         motors.setSpeeds(0,0);
-//         if (lineSensorValues[0] < 150 && lineSensorValues[1] < 150 && lineSensorValues[2] < 150 && 
-//             lineSensorValues[3] < 150 && lineSensorValues[4] < 150) {
-//             motors.setSpeeds(0,0);
-//             delay(5000);
-//         }
-//     }
-//     else if (lineSensorValues[0] < 400 ) { //&& LSPosition < 600
-//         motors.setSpeeds(0,0);
-//         delay(50);
-//         motors.setSpeeds(0,200);
-//         delay(500);
-//         motors.setSpeeds(0,0);
-//         if (lineSensorValues[0] < 150 && lineSensorValues[1] < 150 && lineSensorValues[2] < 150 && 
-//             lineSensorValues[3] < 150 && lineSensorValues[4] < 150) {
-//             motors.setSpeeds(0,0);
-//             delay(5000);
-//         }
-//     }
-// }    
+    else if (lineSensorValues[0] < 400 ) { //&& LSPosition < 600
+        motors.setSpeeds(0,0);
+        delay(50);
+        motors.setSpeeds(0,200);
+        delay(500);
+        motors.setSpeeds(0,0);
+        if (lineSensorValues[0] < 150 && lineSensorValues[1] < 150 && lineSensorValues[2] < 150 && 
+            lineSensorValues[3] < 150 && lineSensorValues[4] < 150) {
+            motors.setSpeeds(0,0);
+            delay(5000);
+        }
+    }
+}    
 
 // void proxSensor() {
 //     proxSensors.read();
