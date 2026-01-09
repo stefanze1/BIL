@@ -1,19 +1,15 @@
-#ifndef LINESENSORS_H
-#define LINESENSORS_H
+#ifndef BATTERY_H
+#define BATTERY_H
 
 #include <Zumo32U4.h>
 
-extern Zumo32U4ButtonA buttonA;
 extern Zumo32U4Motors motors;
-extern Zumo32U4LineSensors lineSensors;
 
-extern Zumo32U4Encoders Encoders;
 
-void calibrateLineSensors();
-void followLine();
-void turnLeft();
-void turnRight();
-void returnToCharger();
+extern Zumo32U4Encoders encoders;
+
+
+void battery();
 
 
 #endif
