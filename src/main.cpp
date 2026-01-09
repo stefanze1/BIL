@@ -1,9 +1,12 @@
 #include <Arduino.h>
-#include "linesensors.h"
+#include "Battery.h"
 
-void setup() {
+void setup() {¨
+    serial.begin(9600);
+
     lineSensors.initFiveSensors();
     proxSensors.initThreeSensors();
+
     
     buttonA.waitForButton();
     calibrateLineSensors();
@@ -11,26 +14,14 @@ void setup() {
 
 void loop() {
     
+    void Battery();
+
     if (buttonA.getSingleDebouncedPress()) {
         while (!buttonA.getSingleDebouncedPress()) {
         followLine();
-        returnToCharger();
     }
     
     motors.setSpeeds(0, 0);
-}
-
-    if (buttonB.getSingleDebouncedPress()) {
-        while (!buttonB.getSingleDebouncedPress()) {
-            followLine2();
-        }
-    motors.setSpeeds(0,0);
     }
 
-    if (buttonC.getSingleDebouncedPress()) {
-        while (!buttonC.getSingleDebouncedPress()) {
-            followLine3();
-        }
-    motors.setSpeeds(0,0);
-    }
 }
