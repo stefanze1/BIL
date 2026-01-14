@@ -30,7 +30,7 @@ void calibrateLineSensors() {
 }
 
 void followLine() {
-    int16_t LSPosition = lineSensors.readLine(lineSensorValues); //Leser posisjon
+    int16_t LSPosition = lineSensors.readLine(lineSensorValues); //Leser pos.
     int16_t LSError = LSPosition - 2000; // trekker fra 200, da det er midtpunkt
     int16_t speedDiff = LSError / 12 + 1 * (LSError - LSLastError); //Dette er PID regulering, uten I. funnet på nett. justert selv
     LSLastError = LSError;
@@ -95,4 +95,3 @@ void leftTurn() {
         motors.setSpeeds(0,0);
     }
 }
-  
