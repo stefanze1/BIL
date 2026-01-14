@@ -1,14 +1,14 @@
 #include <Arduino.h>
-#include "display.h"   // vår egen header
+#include "display.h"
+
+// Battery.cpp
+void battery();
 
 void setup() {
-  // Start skjermen og vis intro
   screenStartup();
 }
 
 void loop() {
-  // Oppdater batteri og display hele tiden
-  batteriDrain();
-
-  // Her kan du senere legge inn knapper, motorer osv.
-  }
+  battery();        // oppdaterer batteryLevel
+  batteriDrain();   // viser batteryLevel på display
+}
