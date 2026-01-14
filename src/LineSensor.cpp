@@ -4,7 +4,7 @@
 #define NUM_SENSORS 5
 #define maxSpeed 300
 #define maxSpeed2 200
-#define maxSpeed3 120
+#define maxSpeed3 100
 
 int16_t LSLastError = 0;
 unsigned int lineSensorValues[NUM_SENSORS];
@@ -14,7 +14,6 @@ Zumo32U4ButtonB buttonB;
 Zumo32U4ButtonC buttonC;
 Zumo32U4Motors motors;
 Zumo32U4LineSensors lineSensors;
-Zumo32U4ProximitySensors proxSensors;
 
 void calibrateLineSensors() {
     delay(1000);
@@ -33,7 +32,7 @@ void calibrateLineSensors() {
 void followLine() {
     int16_t LSPosition = lineSensors.readLine(lineSensorValues); //Leser posisjon
     int16_t LSError = LSPosition - 2000; // trekker fra 200, da det er midtpunkt
-    int16_t speedDiff = LSError / 12 + 1 * (LSError - LSLastError); //Dette er PID regulering, uten I. funnet på nett.
+    int16_t speedDiff = LSError / 12 + 1 * (LSError - LSLastError); //Dette er PID regulering, uten I. funnet på nett. justert selv
     LSLastError = LSError;
 
     int16_t LSLeftSpeed = (int16_t)maxSpeed/2 + speedDiff;
@@ -49,7 +48,7 @@ void followLine() {
 void followLine2() {
     int16_t LSPosition = lineSensors.readLine(lineSensorValues);
     int16_t LSError = LSPosition - 2000;
-    int16_t speedDiff = LSError / 8 + 1 * (LSError - LSLastError);
+    int16_t speedDiff = LSError / 12 + 1 * (LSError - LSLastError);
     LSLastError = LSError;
 
     int16_t LSLeftSpeed = (int16_t)maxSpeed2/2 + speedDiff;
@@ -63,7 +62,7 @@ void followLine2() {
 void followLine3() {
     int16_t LSPosition = lineSensors.readLine(lineSensorValues);
     int16_t LSError = LSPosition - 2000;
-    int16_t speedDiff = LSError / 8 + 1 * (LSError - LSLastError);
+    int16_t speedDiff = LSError / 12 + 1 * (LSError - LSLastError);
     LSLastError = LSError;
 
     int16_t LSLeftSpeed = (int16_t)maxSpeed3/2 + speedDiff;
@@ -76,7 +75,7 @@ void followLine3() {
 }
 
 
-void returnToCharger () {
+void rightTurn () {
     // int16_t LSPosition = lineSensors.readLine(lineSensorValues);
   
     if (lineSensorValues[4] > 925 ) { //&& LSPosition > 3400
@@ -86,6 +85,8 @@ void returnToCharger () {
         delay(500);
         motors.setSpeeds(0,0);
     }
+}
+void leftTurn() {
     if (lineSensorValues[0] > 950  ) { //&& LSPosition < 400
         motors.setSpeeds(0,0);
         delay(50);
@@ -95,37 +96,3 @@ void returnToCharger () {
     }
 }
   
-
-//Stoppe ved dead end
-    // int16_t LSPosition = lineSensors.readLine(lineSensorValues);
-    
-    // bool deadEnd = true;
-    // for (int i = 0; i < 5; i++) {
-    //     if (lineSensorValues[i] > 25) {
-    //         deadEnd = false;
-    //         break;
-    //     }
-    // }
-
-    // if (deadEnd) {
-    //     motors.setSpeeds(0,0);
-    //     delay(1000);
-    //     return;
-    //     }
-
-
-
-
-
-// void proxSensor() {
-//     proxSensors.read();
-//     proxSensors.read();
-
-//     int8_t leftProx = proxSensors.countsFrontWithLeftLeds();
-//     int8_t rightProx = proxSensors.countsFrontWithRightLeds();
-
-//     if (leftProx > 5 || rightProx > 5) { // 0 til 7 
-//         motors.setSpeeds(0,0);
-//         delay(10000);
-//     }     
-// }
