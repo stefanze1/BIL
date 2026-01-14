@@ -58,7 +58,7 @@ void batteriDrain (){
   display.clearBuffer();
   display.setFont(u8g2_font_8x13_tf);
 
-  display.drawStr(0, 12, BatteryLevel);
+  display.drawStr(0, 12, "BatteryLevel");
 
   char buf[10];
   snprintf(buf, sizeof(buf), "%d%%", batteryPercent);
