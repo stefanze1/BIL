@@ -1,36 +1,28 @@
 #include <Arduino.h>
 #include "linesensors.h"
 
+bool isStopped = false;
+
 void setup() {
     lineSensors.initFiveSensors();
-    proxSensors.initThreeSensors();
     
-    buttonA.waitForButton();
-    calibrateLineSensors();
+    // buttonA.waitForButton();
+    // calibrateLineSensors();
 }
 
 void loop() {
     
-    if (buttonA.getSingleDebouncedPress()) {
-        while (!buttonA.getSingleDebouncedPress()) {
-        followLine();
-        returnToCharger();
-    }
-    
-    motors.setSpeeds(0, 0);
-}
-
-    if (buttonB.getSingleDebouncedPress()) {
-        while (!buttonB.getSingleDebouncedPress()) {
-            followLine2();
-        }
+//     if (buttonA.getSingleDebouncedPress()) {
+//         while (!buttonA.getSingleDebouncedPress()) {
+//         followLine();
+//         rightTurn();
+//         leftTurn();
+//         // isLineLost();
+//     }
+// }
+    motors.setSpeeds(200,200);
+    if(Delay(500)) {
     motors.setSpeeds(0,0);
     }
-
-    if (buttonC.getSingleDebouncedPress()) {
-        while (!buttonC.getSingleDebouncedPress()) {
-            followLine3();
-        }
-    motors.setSpeeds(0,0);
-    }
+    Delay(500);
 }
