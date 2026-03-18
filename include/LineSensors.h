@@ -16,7 +16,7 @@ void followLine3();
 void rightTurn();
 void leftTurn();
 bool lostLine();
-bool Delay(unsigned long time);
-
+bool timer50ms();
+bool timer500ms();
 
 #endif

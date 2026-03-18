@@ -34,8 +34,8 @@ void calibrateLineSensors() {
 
 void followLine() {
     int16_t LSPosition = lineSensors.readLine(lineSensorValues); //Leser pos.
-    int16_t LSError = LSPosition - 2000; // trekker fra 200, da det er midtpunkt
-    int16_t speedDiff = LSError / 12 + 1 * (LSError - LSLastError); //Dette er PID regulering, uten I. funnet på nett. justert selv
+    int16_t LSError = LSPosition - 2000; // trekker fra 2000, da det er midtpunkt
+    int16_t speedDiff = LSError / 12 + 0.5 * (LSError - LSLastError); //Dette er PID regulering, uten I. funnet på nett. justert selv
     LSLastError = LSError;
 
     int16_t LSLeftSpeed = (int16_t)maxSpeed/2 + speedDiff;
@@ -51,7 +51,7 @@ void followLine() {
 void followLine2() {
     int16_t LSPosition = lineSensors.readLine(lineSensorValues);
     int16_t LSError = LSPosition - 2000;
-    int16_t speedDiff = LSError / 12 + 1 * (LSError - LSLastError);
+    int16_t speedDiff = LSError / 12 + 0.5 * (LSError - LSLastError);
     LSLastError = LSError;
 
     int16_t LSLeftSpeed = (int16_t)maxSpeed2/2 + speedDiff;
@@ -65,7 +65,7 @@ void followLine2() {
 void followLine3() {
     int16_t LSPosition = lineSensors.readLine(lineSensorValues);
     int16_t LSError = LSPosition - 2000;
-    int16_t speedDiff = LSError / 12 + 1 * (LSError - LSLastError);
+    int16_t speedDiff = LSError / 12 + 0.5 * (LSError - LSLastError);
     LSLastError = LSError;
 
     int16_t LSLeftSpeed = (int16_t)maxSpeed3/2 + speedDiff;
@@ -77,11 +77,28 @@ void followLine3() {
     motors.setSpeeds(LSLeftSpeed, LSRightSpeed);
 }
 
-
-void rightTurn () {
-    // int16_t LSPosition = lineSensors.readLine(lineSensorValues);
+bool timer50ms() {
+  static unsigned long currentTime = 0;
   
-    if (lineSensorValues[4] > 925 ) { //&& LSPosition > 3400
+  if ((millis() - currentTime) >= 50){
+  	currentTime = millis();
+    return true;
+  }
+    return false;
+}
+
+bool timer500ms() {
+  static unsigned long currentTime = 0;
+  
+  if ((millis() - currentTime) >= 500){
+  	currentTime = millis();
+    return true;
+  }
+  return false;
+}
+
+void rightTurn() {
+     if (lineSensorValues[4] >= 925 ) { //&& LSPosition < 400
         motors.setSpeeds(0,0);
         delay(50);
         motors.setSpeeds(200,0);
@@ -89,8 +106,9 @@ void rightTurn () {
         motors.setSpeeds(0,0);
     }
 }
+
 void leftTurn() {
-    if (lineSensorValues[0] > 950  ) { //&& LSPosition < 400
+    if (lineSensorValues[0] >= 925 ) { //&& LSPosition < 400
         motors.setSpeeds(0,0);
         delay(50);
         motors.setSpeeds(0,200);
@@ -128,12 +146,3 @@ bool lostLine() { // brukes med if
 }
 
 
-bool Delay(unsigned long DELAY) {
-   static unsigned long time = 0;
-    if (millis() - time >= DELAY) {
-        time = millis();
-        return true;
-    }
-
-    return false;
-}
