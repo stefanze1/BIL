@@ -8,6 +8,7 @@ Zumo32U4ButtonB buttonB;
 Zumo32U4ButtonC buttonC;
 Zumo32U4Motors motors;
 Zumo32U4LineSensors lineSensors;
+Zumo32U4ProximitySensors proxSensors;
 
 int junctionNum = 0;
 
@@ -37,9 +38,10 @@ void followLine() {
     int16_t LSPosition = lineSensors.readLine(lineSensorValues);
     int16_t LSError = LSPosition - 2000; // 2000 er midtpunktet av linjesensorene, så feilen er avviket fra midtpunkt.
 
-    int16_t speedDiff = LSError / 12 + 0.5 * (LSError - LSLastError);//Nøye utrøvde verdier for stabilitet, PD, regulering.
+    int16_t speedDiff = LSError / 9 + 0.5 * (LSError - LSLastError);//Nøye utrøvde verdier for stabilitet, PD, regulering.
     LSLastError = LSError;                                        //justerer sving basert på avvik
 //14+0.5 litt hakkete|//12+0,5(ok, for lav) | 10+1,5 greit på høy 8 +1||0.5gjør den treg
+//9+0.5 gir ok linjefølging og fungerende krysstellin/logikk
     int16_t LSLeftSpeed = (int16_t)maxSpeed/2 + speedDiff;// Kjører halvparten av max fart + fartsforskjell
     int16_t LSRightSpeed = (int16_t)maxSpeed/2 - speedDiff;
 
@@ -109,8 +111,16 @@ void leftTurn() {
     }
 }
 
-bool allWhite = true;
+void proxSensor() {
+    proxSensors.read();
+    int8_t leftProx = proxSensors.countsFrontWithLeftLeds();
+    int8_t rightProx = proxSensors.countsFrontWithRightLeds();
+    if (leftProx > 5 || rightProx > 5) { // 0 til 7 
+        motors.setSpeeds(0,0);
+    }     
+}
 
+bool allWhite = true;
 bool lostLine() {
     static uint8_t lostCounter = 0;
 

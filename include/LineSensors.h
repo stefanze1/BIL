@@ -10,6 +10,7 @@ extern Zumo32U4ButtonB buttonB;
 extern Zumo32U4ButtonC buttonC;
 extern Zumo32U4Motors motors;
 extern Zumo32U4LineSensors lineSensors;
+extern Zumo32U4ProximitySensors proxSensors;
 extern int junctionNum;
 extern int rTrnState;
 extern int lTrnState;
@@ -19,6 +20,7 @@ void calibrateLineSensors();
 void followLine(); //(int16_t LSPosition)
 void rightTurn();
 void leftTurn();
+void proxSensor();
 bool lostLine();
 
 #endif
